@@ -1,0 +1,10 @@
+<library path="lib/libantobot_move_safety_nodelet">
+  <class name="antobot_move_safety/CmdVelMuxNodelet"
+         type="antobot_move_safety::CmdVelMuxNodelet"
+         base_class_type="nodelet::Nodelet">
+    <description>
+      Implementation for the command velocity multiplexer as a nodelet.
+    </description>
+  </class>
+</library>
+
