@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(antobot_msgs)
+project(antobot_platform_msgs)
 
 add_compile_options(-std=c++11)
 
@@ -18,9 +18,7 @@ add_message_files(
 
 add_service_files(
   FILES
-  camManager.srv
   softShutdown.srv
-  antoRec.srv
 )
 
 generate_messages(

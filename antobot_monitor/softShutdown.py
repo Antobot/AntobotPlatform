@@ -13,7 +13,7 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 
 import paramiko #the 3rd party tool to ssh
-from antobot_manager_msgs.srv import softShutdown, softShutdownResponse
+from antobot_platform_msgs.srv import softShutdown, softShutdownResponse
 import os
 import rospy
 import time

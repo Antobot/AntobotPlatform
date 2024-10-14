@@ -21,7 +21,7 @@ import rospkg
 
 from std_msgs.msg import Bool, UInt8
 from anto_bridge_msgs.msg import UInt8_Array,Float32_Array,UInt16_Array ##check syntax
-from antobot_manager_msgs.srv import softShutdown
+from antobot_platform_msgs.srv import softShutdown
 
 disk="./"
 min_gb=2

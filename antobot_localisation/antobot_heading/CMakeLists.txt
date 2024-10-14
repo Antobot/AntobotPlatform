@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(antobot_move_heading)
+project(antobot_heading)
 
 add_compile_options(-std=c++11)
 
@@ -12,8 +12,8 @@ find_package(catkin REQUIRED
     tf2_geometry_msgs
     tf2
     geonav_transform
-    antobot_move_msgs
-    antobot_manager_msgs
+    antobot_platform_msgs
+    antobot_devices_msgs
     geometry_msgs
 )
 
@@ -28,8 +28,8 @@ catkin_package(
         tf2_geometry_msgs
         tf2
         geonav_transform
-        antobot_move_msgs
-        antobot_manager_msgs
+        antobot_platform_msgs
+        antobot_devices_msgs
         geometry_msgs
 )
 

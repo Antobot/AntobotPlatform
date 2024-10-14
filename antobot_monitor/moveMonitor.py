@@ -32,7 +32,7 @@ from std_msgs.msg import Float32, Bool, UInt8
 from sensor_msgs.msg import NavSatFix, Imu
 from geometry_msgs.msg import Twist
 
-from antobot_manager_msgs.srv import moveMonitorInfo, moveMonitorInfoResponse
+from antobot_platform_msgs.srv import moveMonitorInfo, moveMonitorInfoResponse
 
 
 class moveManager():

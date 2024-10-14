@@ -37,9 +37,9 @@ from antobot_move_cartograph.navigatorLoadXMLClient import *
 from antobot_manager_jobs.jobManagerAssignJobClient import *
 from antobot_manager_jobs.jobManagerUserInputClient import *
 
-from antobot_manager_jobs.uvManagerClient import uvManagerClient
-from antobot_manager_jobs.camManagerClient import camManagerClient
-from antobot_manager_msgs.srv import recManagerStartRec, recManagerStartRecResponse
+# from antobot_manager_jobs.uvManagerClient import uvManagerClient
+from antobot_devices_camera.camManagerClient import camManagerClient
+from antobot_devices_msgs.srv import recManagerStartRec, recManagerStartRecResponse
 
 
 ####################################################################################

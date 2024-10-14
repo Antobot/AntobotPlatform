@@ -27,7 +27,7 @@
 #include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 #include <tf2/convert.h>
 #include <std_srvs/Trigger.h>
-#include <antobot_manager_msgs/progressUpdate.h>
+#include <antobot_devices_msgs/progressUpdate.h>
 #include <geometry_msgs/Twist.h>
 #include <geometry_msgs/PolygonStamped.h>
 
@@ -128,7 +128,7 @@ namespace heading
             double calculateDifference(double, double);
             double normalize_angle(double);
             double autoCalibration_hmi(void);
-            bool hmiService(antobot_manager_msgs::progressUpdate::Request &req, antobot_manager_msgs::progressUpdate::Response &res );
+            bool hmiService(antobot_devices_msgs::progressUpdate::Request &req, antobot_devices_msgs::progressUpdate::Response &res );
             bool checkObstacle(void);
             bool dualGPSHeadingCalibration(void);
 

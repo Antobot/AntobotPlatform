@@ -122,7 +122,7 @@ namespace heading
         pub_switch = nh_.advertise<std_msgs::UInt8>("/antobot/teleop/switch_mode", 1);
         // Service
         ekf_srv = nh_.serviceClient<std_srvs::Trigger>("launch_ekf"); // launch ekf nodes once the initial calibration is done
-        hmi_srv = nh_.serviceClient<antobot_manager_msgs::progressUpdate>("/calibration_HMI/progressUpdate"); // update progress in HMI bridge
+        hmi_srv = nh_.serviceClient<antobot_devices_msgs::progressUpdate>("/calibration_HMI/progressUpdate"); // update progress in HMI bridge
         hmi_calibration_srv = nh_.advertiseService("/calibration/progressUpdate", &heading::hmiService,this);
 
         // Timer
@@ -130,7 +130,7 @@ namespace heading
         imu_pub_timer = nh_.createTimer(ros::Duration(1.0/20.0), &heading::publishNewIMU, this); // 10Hz 
     } 
 
-    bool heading::hmiService(antobot_manager_msgs::progressUpdate::Request &req, antobot_manager_msgs::progressUpdate::Response &res ){
+    bool heading::hmiService(antobot_devices_msgs::progressUpdate::Request &req, antobot_devices_msgs::progressUpdate::Response &res ){
         ROS_INFO("hmi auto service called %d",req.progressCode);
         hmi_auto_button_pressed = true;
         hmi_auto_button_time =ros::Time::now();
@@ -316,7 +316,7 @@ namespace heading
         int state = 1;
         
         // update HMI progress : state 1 - ready for calibration
-        antobot_manager_msgs::progressUpdate hmi_req;
+        antobot_devices_msgs::progressUpdate hmi_req;
         hmi_req.request.progressCode = 1;
         hmi_srv.call(hmi_req);
         ROS_INFO("HMI progress updated - state 1 (ready for calibration)");
@@ -336,7 +336,7 @@ namespace heading
             if (! dual_gps && hmi_auto_button_pressed){
                 hmi_auto_button_pressed = false; 
                 // update HMI progress : state 2 - In auto calibration
-                antobot_manager_msgs::progressUpdate hmi_req;
+                antobot_devices_msgs::progressUpdate hmi_req;
                 hmi_req.request.progressCode = 2;
                 hmi_srv.call(hmi_req);
                 ROS_INFO("HMI progress updated - state 2 (In auto calibration) - Robot will move forward");
@@ -423,7 +423,7 @@ namespace heading
                 ROS_INFO("HMI auto-calibration: Time out (15s)- Fail");
 
                 // update HMI progress : state 4 - calibration fail
-                antobot_manager_msgs::progressUpdate hmi_req;
+                antobot_devices_msgs::progressUpdate hmi_req;
                 hmi_req.request.progressCode = 4;
                 hmi_srv.call(hmi_req);
                 ROS_INFO("HMI progress updated - state 4 (auto calibration fail)");
