@@ -9,7 +9,7 @@
 -->
 
 <launch>
-  <node pkg="antobot_move_heading" type="heading_node.py" name="heading_node_py" output="screen"> 
+  <node pkg="antobot_heading" type="heading_node.py" name="heading_node_py" output="screen"> 
     <param name="gps_topic" type="string" value="/am_gps_urcu" />
   	<param name="imu_topic" type="string" value="/imu/data" />
   	<param name="odometry_topic" type="string" value="/odometry/filtered" />

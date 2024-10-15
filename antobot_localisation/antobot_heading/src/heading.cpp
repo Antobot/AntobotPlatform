@@ -15,7 +15,7 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 */
 
-#include <antobot_move_heading/heading.h>
+#include <antobot_heading/heading.h>
 
 namespace heading
 {

@@ -1,18 +1,18 @@
 
-antobot_move_heading
+antobot_heading
 ====================
 
-Includes antobot_move_heading node that takes in imu raw data and gps data and outputs corrected imu data (initial calibration). This corrected imu data is then used in EKF nodes. After the first calibration, it will run auto calibration logic every 15 seconds. 
+Includes antobot_heading node that takes in imu raw data and gps data and outputs corrected imu data (initial calibration). This corrected imu data is then used in EKF nodes. After the first calibration, it will run auto calibration logic every 15 seconds. 
 
 ###### launch files:
- * auto_calibration_cpp.launch : launches antobot_move_heading node written in C++. C++ version has significantly lower CPU load.
- * auto_calibration_python.launch : launches antobot_move_heading node written in python. 
+ * auto_calibration_cpp.launch : launches antobot_heading node written in C++. C++ version has significantly lower CPU load.
+ * auto_calibration_python.launch : launches antobot_heading node written in python. 
 
 ###### How to:
  * launch heading_launcher.launch. This launches auto_calibration_cpp.launch and heading_ekf_launcher node that waits for the inital calibration to be finished. After the initial calibration, it launches EKF node.
  
 ```
- <include file="$(find antobot_move_heading)/launch/heading_launcher.launch"></include>
+ <include file="$(find antobot_heading)/launch/heading_launcher.launch"></include>
 ```
 
 ###### Parameters:

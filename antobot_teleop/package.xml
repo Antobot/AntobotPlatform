@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>antobot_move_teleop</name>
+  <name>antobot_teleop</name>
   <version>0.0.0</version>
   <description>The antobot_move_teleop package, which contains the code for robot teleoperation</description>
 

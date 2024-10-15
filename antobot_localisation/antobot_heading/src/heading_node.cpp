@@ -8,7 +8,7 @@
 # # # #  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 */
 
-#include <antobot_move_heading/heading.h>
+#include <antobot_heading/heading.h>
 
 int main(int argc, char** argv){
   ros::init(argc, argv, "heading_node", ros::init_options::NoSigintHandler);

@@ -14,14 +14,14 @@
   <arg name="use_cpp" default="true" />
 
   <group if="$(arg use_cpp)">
-    <include file="$(find antobot_move_heading)/launch/auto_calibration_cpp.launch"></include>
+    <include file="$(find antobot_heading)/launch/auto_calibration_cpp.launch"></include>
   </group>
 
   <group unless="$(arg use_cpp)">
-    <include file="$(find antobot_move_heading)/launch/auto_calibration_python.launch"></include>
+    <include file="$(find antobot_heading)/launch/auto_calibration_python.launch"></include>
   </group>
 
-  <node pkg="antobot_move_heading" type="heading_ekf_launcher.py" name="heading_ekf_launcher" output="screen"> 
+  <node pkg="antobot_heading" type="heading_ekf_launcher.py" name="heading_ekf_launcher" output="screen"> 
   </node>
 
 </launch> 
