@@ -1,4 +1,4 @@
-### antobot_move_ekf
+### antobot_ekf
 
 Package holds the parameters and launch files for the sensor fusion using EKF.
 * params:

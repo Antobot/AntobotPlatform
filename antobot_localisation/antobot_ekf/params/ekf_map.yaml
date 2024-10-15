@@ -108,7 +108,7 @@ odom0_relative: false
 #odom0_twist_rejection_threshold: 1
 
 # wheel odometry
-odom1: /am_robot/odom
+odom1: /antobot_robot/odom
 
 odom1_config: [false, false,  false,
                false, false, false,

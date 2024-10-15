@@ -5,11 +5,11 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 
 Description: 	The primary purpose of this code is to serve as a communication channel between the ROS components of
-		the Xavier NX and the the Aurix. This channel goes in 2 directions. It reads information from am_robot/cmd_vel 
+		the Xavier NX and the the Aurix. This channel goes in 2 directions. It reads information from antobot_robot/cmd_vel 
 		and other relevant ROS topics, converts it to the format defined in AntoBridge, and sends the
 		data to the AntoBridge ROS node via publishers. Likewise, it reads data from AntoBridge using subscribers, and
 		passes this data along to the robot to calculate wheel odometry and other relevant information.
-Inputs:			Command velocity from: /am_robot/cmd_vel
+Inputs:			Command velocity from: /antobot_robot/cmd_vel
 				Sensed wheel velocities: /antobridge/wheel_vel
 
 Outputs:		Desired wheel velocities (rad/s) to: /antobridge/wheel_vel_cmd

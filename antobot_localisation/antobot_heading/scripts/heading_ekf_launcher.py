@@ -18,7 +18,7 @@ def launchEkf(request):
     Launch roslaunch file using subprocess - roslaunch package doesn't work outside of the main thread
     ref: https://answers.ros.org/question/42849/how-to-launch-a-launch-file-from-python-code/
     """    
-    package = 'antobot_move_ekf'
+    package = 'antobot_ekf'
     node_name = 'ekf.launch'
     command = "roslaunch {0} {1}".format(package, node_name)
     p = subprocess.Popen(command, shell=True)

@@ -9,7 +9,7 @@
 # Subscribes to: GPS topic (/am_gps_uruc)
 #                imu topic (/imu/data)
 #                EKF odometry topic (/odometry/filtered)
-#                wheel odometry topic (/am_robot/odom)
+#                wheel odometry topic (/antobot_robot/odom)
 # Publishes : Calibrated imu topic (/imu/data_corrected) - which is then used in EKF
 # Contacts: 	soyoung.kim@antobot.ai
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -109,7 +109,7 @@ namespace heading
         sub_wheel_odom = nh_.subscribe<nav_msgs::Odometry>(wheelodometry_topic, 100, &heading::wheelOdomCallback,this);
         sub_costmap = nh_.subscribe<nav_msgs::OccupancyGrid>("/costmap_node/costmap/costmap", 100, &heading::costmapCallback,this);
         sub_footprint = nh_.subscribe<geometry_msgs::PolygonStamped>("/costmap_node/costmap/footprint", 100, &heading::footprintCallback,this);
-        sub_cmd_vel = nh_.subscribe<geometry_msgs::Twist>("/am_robot/cmd_vel", 100, &heading::cmdVelCallback,this);
+        sub_cmd_vel = nh_.subscribe<geometry_msgs::Twist>("/antobot_robot/cmd_vel", 100, &heading::cmdVelCallback,this);
         sub_heading = nh_.subscribe<std_msgs::Float64>("am_heading_robot", 100, &heading::headingCallback,this);
         
         // Publisher

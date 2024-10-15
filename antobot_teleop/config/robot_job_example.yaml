@@ -1,6 +1,0 @@
-# # # YAML file containing all robot ID's for the MQTT interface
-
-saved_routes_dir: "/root/catkin_ws/src/AntoManager/anto_director/saved_routes"
-
-xml_file: "/src/XML data/brBrooks03.antonav.xml"
-job_file: "/brBrooks03/shortRowTransit"

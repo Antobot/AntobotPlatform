@@ -27,7 +27,7 @@ AmSafety::AmSafety(ros::NodeHandle& nh) : nh_(nh)
     /*  Initialises the AmSafety class*/
     double loop_hz_ = 30.0;
 
-    AmSafety::output_cmd_vel_pub = nh_.advertise<geometry_msgs::Twist>("/am_robot/cmd_vel", 10);    // Final output for robot cmd_vel
+    AmSafety::output_cmd_vel_pub = nh_.advertise<geometry_msgs::Twist>("/antobot_robot/cmd_vel", 10);    // Final output for robot cmd_vel
     AmSafety::output_uss_dist_filt_pub = nh_.advertise<anto_bridge_msgs::UInt16_Array>("/antobot_safety/uss_dist", 10);    // Distances reported by USS
     force_stop_type_pub = nh_.advertise<std_msgs::Int8>("/antobot_safety/force_stop_type", 10);    // 0 - none (or release); 
                                                                                                         // 1-8: USS

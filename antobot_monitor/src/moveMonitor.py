@@ -130,9 +130,9 @@ class moveManager():
 
         # self.pub_total_mileage = rospy.Publisher("/as/total_mileage",Float32,queue_size = 1)
 
-        self.sub_GPS_data = rospy.Subscriber("/am_gps_urcu",NavSatFix,self.GPS_callback)        # Should raw GPS data be used? What if it stops coming?
+        self.sub_GPS_data = rospy.Subscriber("/antobot_gps",NavSatFix,self.GPS_callback)        # Should raw GPS data be used? What if it stops coming?
         self.sub_IMU = rospy.Subscriber('/imu/data_corrected', Imu, self.imu_callback)          # Subscriber for imu data corrected
-        self.sub_cmdVel = rospy.Subscriber('/am_robot/cmd_vel', Twist, self.cmdVel_callback)    # Subscriber for cmd velocity
+        self.sub_cmdVel = rospy.Subscriber('/antobot_robot/cmd_vel', Twist, self.cmdVel_callback)    # Subscriber for cmd velocity
         self.sub_mileage_tracker = rospy.Subscriber('/antobot/navigator/distanceTravelled',Float32, self.mileage_callback)     # Subscriber for mileage
 
         # Publish safety critical data

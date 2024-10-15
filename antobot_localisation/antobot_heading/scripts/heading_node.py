@@ -10,7 +10,7 @@
 # Subscribes to: GPS topic (/am_gps_uruc)
 #                imu topic (/imu/data)
 #                EKF odometry topic (/odometry/filtered)
-#                wheel odometry topic (/am_robot/odom)
+#                wheel odometry topic (/antobot_robot/odom)
 # Publishes : Calibrated imu topic (/imu/data_corrected) - which is then used in EKF
 # Contacts:     soyoung.kim@antobot.ai
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -71,10 +71,10 @@ class autoCalibration:
         self.gps_yaw = None
 
         # Read parameters to set the topic names
-        self.gps_topic = rospy.get_param('~gps_topic', 'am_gps_urcu')
+        self.gps_topic = rospy.get_param('~gps_topic', 'antobot_gps')
         self.imu_topic = rospy.get_param('~imu_topic','imu/data')
         self.odometry_topic = rospy.get_param('~odometry_topic', 'odometry/filtered')
-        self.wheelodometry_topic = rospy.get_param('~wheel_odometry_topic', 'am_robot/odom')
+        self.wheelodometry_topic = rospy.get_param('~wheel_odometry_topic', 'antobot_robot/odom')
         self.sim = rospy.get_param("/simulation",False) 
 
         self.rtk_target_status = 3 # rtk status is 3 in 3D fixed mode
