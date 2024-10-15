@@ -8,7 +8,7 @@ Description: 	The primary purpose of this code is to take command velocities and
 in order to scale the output robot command velocity to an appropriate level. More specifically, this code filters data from
 ultrasonic sensors and forces the robot to stop if a collision is predicted or if a distance threshold is too close.
 If a force stop is commanded, then the lights are made to blink.
-If antobot_move_safety is properly implemented with working sensors, the AntoSafe code in Aurix should never have to be used.
+If antobot_safety is properly implemented with working sensors, the AntoSafe code in Aurix should never have to be used.
 
 Contacts: 	daniel.freer@antobot.ai
 
@@ -19,7 +19,7 @@ Contacts: 	daniel.freer@antobot.ai
 #include <math.h>
 
 #include <ros/ros.h>
-#include "antobot_move_safety/safety.hpp"
+#include "antobot_safety/safety.hpp"
 #include <string>
 
 AmSafety::AmSafety(ros::NodeHandle& nh) : nh_(nh)
@@ -28,13 +28,13 @@ AmSafety::AmSafety(ros::NodeHandle& nh) : nh_(nh)
     double loop_hz_ = 30.0;
 
     AmSafety::output_cmd_vel_pub = nh_.advertise<geometry_msgs::Twist>("/am_robot/cmd_vel", 10);    // Final output for robot cmd_vel
-    AmSafety::output_uss_dist_filt_pub = nh_.advertise<anto_bridge_msgs::UInt16_Array>("/antobot_move_safety/uss_dist", 10);    // Distances reported by USS
-    force_stop_type_pub = nh_.advertise<std_msgs::Int8>("/antobot_move_safety/force_stop_type", 10);    // 0 - none (or release); 
+    AmSafety::output_uss_dist_filt_pub = nh_.advertise<anto_bridge_msgs::UInt16_Array>("/antobot_safety/uss_dist", 10);    // Distances reported by USS
+    force_stop_type_pub = nh_.advertise<std_msgs::Int8>("/antobot_safety/force_stop_type", 10);    // 0 - none (or release); 
                                                                                                         // 1-8: USS
                                                                                                             // 1 - front left; 2 - front; 3 - front right; 4 - right; 
                                                                                                             // 5 - back right; 6 - back; 7 - back left; 8 - left;
                                                                                                         // 9: front bump stop; 10: back bump stop
-    safe_operation_pub = nh_.advertise<std_msgs::Bool>("/antobot_move_safety/safe_operation", 10);
+    safe_operation_pub = nh_.advertise<std_msgs::Bool>("/antobot_safety/safe_operation", 10);
 	lights_f_pub = nh_.advertise<std_msgs::Bool>("/antobridge/lights_f", 1);
     lights_b_pub = nh_.advertise<std_msgs::Bool>("/antobridge/lights_b", 1);
 
@@ -385,7 +385,7 @@ void AmSafety::lightCmdFreq()
 
 void AmSafety::safetyCmdVelCallback(const geometry_msgs::Twist::ConstPtr& msg)
 {
-    /* Callback function for /antobot_move_safety/cmd_vel. Assigns the velocity data received from
+    /* Callback function for /antobot_safety/cmd_vel. Assigns the velocity data received from
     this ROS topic to the robot if appropriate, and ensures reasonable acceleration.
     */
 
@@ -439,7 +439,7 @@ void AmSafety::ussDistCallback(const anto_bridge_msgs::UInt16_Array::ConstPtr& m
     //  Inputs: msg <anto_bridge_msgs::UInt16_Array> - currently an 8-element array which provides the distances sensed by each ultrasonic sensor. 
     //                                                The order starting from msg->data[0] is: 0 - front left; 1 - front; 2 - front right; 3 - right;
     //                                                4 - back right; 5 - back; 6 - back left; 7 - left
-    //  Outputs: publishes filtered USS data to /antobot_move_safety/uss_dist ROS topic
+    //  Outputs: publishes filtered USS data to /antobot_safety/uss_dist ROS topic
     anto_bridge_msgs::UInt16_Array uss_dist_filt_all;
     uint16_t uss_dist_ar[8];
     uint16_t uss_dist_filt_i;
@@ -734,7 +734,7 @@ int AmSafety::getCmdVelType()
 int main(int argc, char** argv)
 {
     // Initialises the ROS node and gets the node handle
-    ros::init(argc, argv, "antobot_move_safety");
+    ros::init(argc, argv, "antobot_safety");
     ros::NodeHandle nh;
     ros::Rate rate(25);
 
@@ -742,14 +742,14 @@ int main(int argc, char** argv)
     AmSafety AmSafety1(nh);
 
     // Defines subscribers for calibration and track width adjustment, and links them to the specific class instance of AmSafety
-    ros::Subscriber sub_safety_cmd_vel = nh.subscribe("/antobot_move_safety/cmd_vel", 10, &AmSafety::safetyCmdVelCallback, &AmSafety1);
+    ros::Subscriber sub_safety_cmd_vel = nh.subscribe("/antobot_safety/cmd_vel", 10, &AmSafety::safetyCmdVelCallback, &AmSafety1);
     ros::Subscriber sub_active_cmd_vel = nh.subscribe("/yocs_cmd_vel_mux/active", 10, &AmSafety::activeCmdVelCallback, &AmSafety1);
     ros::Subscriber sub_uss_dist = nh.subscribe("/antobridge/uss_dist", 10, &AmSafety::ussDistCallback, &AmSafety1);
     ros::Subscriber sub_force_stop_release = nh.subscribe("/antobridge/force_stop_release", 10, &AmSafety::releaseCallback, &AmSafety1);
     ros::Subscriber sub_bump_front = nh.subscribe("/antobridge/bump_front", 10, &AmSafety::bumpFrontCallback,&AmSafety1);
     ros::Subscriber sub_bump_back = nh.subscribe("/antobridge/bump_back", 10, &AmSafety::bumpBackCallback, &AmSafety1);
 
-    ROS_INFO("SW1100: antobot_move_safety node launched");
+    ROS_INFO("SW1100: antobot_safety node launched");
 
     //ros::MultiThreadedSpinner spinner(2);
     //spinner.spin();

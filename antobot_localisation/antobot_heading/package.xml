@@ -2,7 +2,7 @@
 <package format="2">
   <name>antobot_heading</name>
   <version>0.0.0</version>
-  <description>The antobot_move_heading package</description>
+  <description>The antobot_heading package</description>
 
   <maintainer email="soyoung.kim@antobot.ai">So-Young Kim</maintainer>
 

@@ -5,7 +5,7 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 
 # # # Code Description:     Launches all the necessary files and nodes for basic operation and movement of the ant robot.
-                            This includes everything between the final command velocity (after safety considerations from antobot_move_safety)
+                            This includes everything between the final command velocity (after safety considerations from antobot_safety)
                             and Aurix (including anto_bridge)
 
 # Contact: daniel.freer@antobot.ai

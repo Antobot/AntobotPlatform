@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- based on slaterobotics' implementation https://medium.com/@slaterobotics/how-to-implement-ros-control-on-a-custom-robot-748b52751f2e -->
 <package>
-  <name>antobot_move_control</name>
+  <name>antobot_control</name>
   <version>0.0.1</version>
   <description>Provides the hardware definition and interfaces for antobot</description>
 

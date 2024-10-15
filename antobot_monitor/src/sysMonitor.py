@@ -20,7 +20,7 @@ import yaml
 import rospkg
 
 from std_msgs.msg import Bool, UInt8
-from anto_bridge_msgs.msg import UInt8_Array,Float32_Array,UInt16_Array ##check syntax
+from antobot_platform_msgs.msg import UInt8_Array,Float32_Array,UInt16_Array
 from antobot_platform_msgs.srv import softShutdown
 
 disk="./"

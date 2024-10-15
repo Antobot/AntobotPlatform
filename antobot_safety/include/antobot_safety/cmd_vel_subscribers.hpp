@@ -37,7 +37,7 @@ void operator >> (const YAML::Node& node, T& i)
 ** Namespaces
 *****************************************************************************/
 
-namespace antobot_move_safety {
+namespace antobot_safety {
 
 
 /*****************************************************************************

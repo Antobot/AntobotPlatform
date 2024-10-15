@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(antobot_move_safety)
+project(antobot_safety)
 find_package(catkin REQUIRED COMPONENTS roscpp pluginlib nodelet dynamic_reconfigure geometry_msgs anto_bridge_msgs)
 
 # pkg-config support
@@ -47,6 +47,6 @@ install(DIRECTORY param
         DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 
-add_executable(antobot_move_safety_node src/safety.cpp)
+add_executable(antobot_safety_node src/safety.cpp)
 
-target_link_libraries(antobot_move_safety_node ${catkin_LIBRARIES})
+target_link_libraries(antobot_safety_node ${catkin_LIBRARIES})

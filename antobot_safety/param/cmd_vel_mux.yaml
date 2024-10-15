@@ -28,4 +28,4 @@ subscribers:
     timeout:     0.2
     priority:    2
     short_desc:  "Velocity commands sent during keyboard or joystick teleoperation"
-publisher:       "/antobot_move_safety/cmd_vel"
+publisher:       "/antobot_safety/cmd_vel"

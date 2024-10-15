@@ -12,14 +12,14 @@
 
 #include <fstream>
 
-#include "antobot_move_safety/cmd_vel_subscribers.hpp"
-#include "antobot_move_safety/exceptions.hpp"
+#include "antobot_safety/cmd_vel_subscribers.hpp"
+#include "antobot_safety/exceptions.hpp"
 
 /*****************************************************************************
 ** Namespaces
 *****************************************************************************/
 
-namespace antobot_move_safety {
+namespace antobot_safety {
 
 /*****************************************************************************
  ** Implementation

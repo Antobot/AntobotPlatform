@@ -14,14 +14,14 @@
 #include <std_msgs/String.h>
 #include <pluginlib/class_list_macros.h>
 
-#include "antobot_move_safety/cmd_vel_mux_nodelet.hpp"
-#include "antobot_move_safety/exceptions.hpp"
+#include "antobot_safety/cmd_vel_mux_nodelet.hpp"
+#include "antobot_safety/exceptions.hpp"
 
 /*****************************************************************************
 ** Namespaces
 *****************************************************************************/
 
-namespace antobot_move_safety {
+namespace antobot_safety {
 
 /*****************************************************************************
  ** Implementation
@@ -93,7 +93,7 @@ void CmdVelMuxNodelet::onInit()
   ** Dynamic Reconfigure
   **********************/
   dynamic_reconfigure_cb = boost::bind(&CmdVelMuxNodelet::reloadConfiguration, this, _1, _2);
-  dynamic_reconfigure_server = new dynamic_reconfigure::Server<antobot_move_safety::reloadConfig>(nh);
+  dynamic_reconfigure_server = new dynamic_reconfigure::Server<antobot_safety::reloadConfig>(nh);
   dynamic_reconfigure_server->setCallback(dynamic_reconfigure_cb);
 
   active_subscriber = nh.advertise <std_msgs::String> ("active", 1, true); // latched topic
@@ -107,7 +107,7 @@ void CmdVelMuxNodelet::onInit()
   NODELET_DEBUG("CmdVelMux : successfully initialized");
 }
 
-void CmdVelMuxNodelet::reloadConfiguration(antobot_move_safety::reloadConfig &config, uint32_t unused_level)
+void CmdVelMuxNodelet::reloadConfiguration(antobot_safety::reloadConfig &config, uint32_t unused_level)
 {
   ros::NodeHandle &pnh = this->getPrivateNodeHandle();
 
@@ -245,4 +245,4 @@ void CmdVelMuxNodelet::reloadConfiguration(antobot_move_safety::reloadConfig &co
 
 } // namespace yocs_cmd_vel_mux
 
-PLUGINLIB_EXPORT_CLASS(antobot_move_safety::CmdVelMuxNodelet, nodelet::Nodelet);
+PLUGINLIB_EXPORT_CLASS(antobot_safety::CmdVelMuxNodelet, nodelet::Nodelet);

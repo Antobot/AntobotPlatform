@@ -1,17 +1,18 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(antobot_ekf)
+project(antobot_monitor)
 
 find_package(catkin REQUIRED COMPONENTS
-  nav_msgs
-  sensor_msgs
+  rospy
   std_msgs
-  tf2
-  tf2_geometry_msgs
-  tf2_ros
+  sensor_msgs
+  geometry_msgs
+  nav_msgs
+  antobot_platform_msgs
 )
 
 
-catkin_package()
+catkin_package(
+)
 
 
 include_directories(

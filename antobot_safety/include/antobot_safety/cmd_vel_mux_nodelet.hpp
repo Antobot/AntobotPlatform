@@ -21,14 +21,14 @@
 #include <nodelet/nodelet.h>
 #include <dynamic_reconfigure/server.h>
 
-#include "antobot_move_safety/reloadConfig.h"
-#include "antobot_move_safety/cmd_vel_subscribers.hpp"
+#include "antobot_safety/reloadConfig.h"
+#include "antobot_safety/cmd_vel_subscribers.hpp"
 
 /*****************************************************************************
 ** Namespaces
 *****************************************************************************/
 
-namespace antobot_move_safety {
+namespace antobot_safety {
 
 /*****************************************************************************
  ** CmdVelMux
@@ -68,9 +68,9 @@ private:
   /*********************
   ** Dynamic Reconfigure
   **********************/
-  dynamic_reconfigure::Server<antobot_move_safety::reloadConfig> * dynamic_reconfigure_server;
-  dynamic_reconfigure::Server<antobot_move_safety::reloadConfig>::CallbackType dynamic_reconfigure_cb;
-  void reloadConfiguration(antobot_move_safety::reloadConfig &config, uint32_t unused_level);
+  dynamic_reconfigure::Server<antobot_safety::reloadConfig> * dynamic_reconfigure_server;
+  dynamic_reconfigure::Server<antobot_safety::reloadConfig>::CallbackType dynamic_reconfigure_cb;
+  void reloadConfiguration(antobot_safety::reloadConfig &config, uint32_t unused_level);
 
   /*********************
    ** Private Classes
