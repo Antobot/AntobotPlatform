@@ -16,11 +16,11 @@
 <launch>
   
   <!-- Defines the robot in ROS -->
-  <rosparam file="$(find antobot_description)/config/control_ant.yaml" command="load"/>
+  <rosparam file="$(find antobot_description)/config/control_ant_v3.yaml" command="load"/>
 
 
   <!-- Launches the robot controller node -->
-  <node if="true" name="ant_control" pkg="antobot_move_control" type="ant_control_node" output="log" />
+  <node if="true" name="ant_control" pkg="antobot_control" type="ant_control_node" output="log" />
   <node if="true" name="anto_bridge" pkg="anto_bridge" type="anto_bridge_node" output="log" />
 
 
