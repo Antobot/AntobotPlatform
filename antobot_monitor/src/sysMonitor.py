@@ -31,16 +31,7 @@ class sysManager():
 
     def __init__(self):
 
-        rospack = rospkg.RosPack()
-        packagePath=rospack.get_path('antobot_manager_software')
-        path=packagePath+'/config/software_config.yaml'
-        with open(path, 'r') as yamlfile:
-            data = yaml.safe_load(yamlfile)
-            try:
-                self.jtop_ext = data['jtop_ext']
-            except KeyError:
-                self.jtop_ext = False
-                print("Jtop config not included. Assuming internal")
+        self.jtop_ext = True    # If using this script inside of a docker ontainer, self.jtop_ext should be True
 
         #Xavier monitor
         if not self.jtop_ext:
