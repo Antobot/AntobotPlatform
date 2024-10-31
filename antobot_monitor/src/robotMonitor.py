@@ -39,49 +39,6 @@ class robotMonitor():
 
     def __init__(self):
 
-        # # # Mileage folder/file
-        # rospack = rospkg.RosPack()
-        # packagePath=rospack.get_path('antobot_platform_robot')
-        # path=packagePath+'/config/robot_config.yaml'
-        # with open(path, 'r') as yamlfile:
-        #     data = yaml.safe_load(yamlfile)
-        #     self.As_Mileage_path = data['mileage_path']
-        # self.As_Mileage_filename = 'mileage.txt'
-        # self.As_Mileage_filenameTmp = 'mileageTmp.txt'
-        # self.last_job_mileage = 0
-        # self.As_lat_past = []
-        # self.As_lon_past = []
-        # self.As_lat = None
-        # self.As_lon = None
-        # self.today = date.today()
-
-        # if os.path.exists(os.path.join(self.As_Mileage_path, self.As_Mileage_filename)):
-        #     with open(os.path.join(self.As_Mileage_path, self.As_Mileage_filename)) as f:
-        #         lines = f.readlines()
-        #         self.As_mileage_temp = float(lines[1]) #mileage from last job
-        #         self.As_mileage_total_temp = float(lines[4])
-        #         self.As_mileage_total = float(lines[7])
-        #     if self.As_mileage_total_temp > self.As_mileage_total: #the running of the antosupervisor must be earlier then antocartogrpher,so this number will be from last job
-        #         self.last_job_mileage = self.As_mileage_temp
-        #         self.As_mileage_temp = 0
-        #         self.As_mileage_total = self.As_mileage_total_temp
-        #         with open(os.path.join(self.As_Mileage_path, self.As_Mileage_filename), 'w') as f: #if the mileage havn't been update from last job
-        #             lines[1] = str(0) + '\n'
-        #             lines[4] = str(self.As_mileage_total) + '\n'
-        #             lines[7] = str(self.As_mileage_total) + '\n'
-        #             f.writelines(lines) 
-        #             self.newmileage=[str(self.today),': ', str(self.last_job_mileage),'\n']
-        #             f.write("".join(self.newmileage))
-        # else:
-        #     os.mkdir(self.As_Mileage_path)
-        #     self.As_mileage_temp = 0
-        #     self.As_mileage_total = 0
-        #     self.As_mileage_total_temp = 0
-        #     with open(os.path.join(self.As_Mileage_path, self.As_Mileage_filename), 'w') as f2:
-        #         line = ['mileage for current job(m):\n',str(self.As_mileage_temp)+'\n\n','Total autonomous mileage include current job(m):\n',str(self.As_mileage_total_temp)+'\n\n','Total autonomous mileage history(m):\n',str(self.As_mileage_total)+'\n\n']
-        #         f2.writelines(line)
-
-        # self.mileage_past = 0
         self.b_robot_movement = False # default robot is not move
         self.u_robot_movement_cnt = 0
 
@@ -133,15 +90,10 @@ class robotMonitor():
         self.sub_GPS_data = rospy.Subscriber("/antobot_gps",NavSatFix,self.GPS_callback)        # Should raw GPS data be used? What if it stops coming?
         self.sub_IMU = rospy.Subscriber('/imu/data_corrected', Imu, self.imu_callback)          # Subscriber for imu data corrected
         self.sub_cmdVel = rospy.Subscriber('/antobot_robot/cmd_vel', Twist, self.cmdVel_callback)    # Subscriber for cmd velocity
-        # self.sub_mileage_tracker = rospy.Subscriber('/antobot/navigator/distanceTravelled',Float32, self.mileage_callback)     # Subscriber for mileage
 
         # Publish safety critical data
         self.pub_error_lv1_stk = rospy.Publisher("/as/error_lv1_stk",Bool,queue_size =1)
-
-        # self.srvNetMtr = rospy.Service("/antobot/manager/moveMonitorInfo", moveMonitorInfo, self._serviceCallbackMoveMtrInfo)
-
         self.pub_robot_stuck = rospy.Publisher("/as/robot_stuck", UInt8, queue_size = 1)
-
 
         return
 
@@ -164,12 +116,8 @@ class robotMonitor():
         # # # Determines whether the robot is currently stuck (i.e. commands are being sent, but the robot isn't moving)
         
         self.cmdVel_consistency_check()
-        #print(self.cmdVel_straight_consistency)
-        #print(self.cmdVel_spotTurn_consistency)
 
         self.As_uAlarm = 0
-
-        #if self.As_b_vel_cmd == True: #command is send
 
         # Stuck during spot turn (indicated by IMU)
         if abs(self.cmdVel_angular.z) > 0.1 and abs(self.cmdVel_linear.x) <= self.spotTurn_oscillation_amplitude:    # spot turn command
@@ -184,9 +132,6 @@ class robotMonitor():
         else:
             self.stuck_spotTurn = False
 
-        
-        #print(self.robot_movement_dist5)
-
         # Stuck while moving straight(-ish)
         if abs(self.cmdVel_linear.x) > 0.1: # and self.As_bGNSS == True: #when GNSS is good, check robot location every 5 seconds - removed this requirement - robot can still get stuck when GPS is bad, moved inside milage tracker
             self.robot_movement_distance()
@@ -200,11 +145,6 @@ class robotMonitor():
                 self.stuck_straightMove = False
         else:
             self.stuck_straightMove = False
-            
-            # # TODO: Robot movement too fast/erratic!
-            # How to determine this?
-        #else:
-        #    self.robot_movement_total = 0
 
 
         if not self.stuck_spotTurn and not self.stuck_straightMove:
@@ -217,14 +157,11 @@ class robotMonitor():
 
         self.error_lv_report()
 
-
         # Report if either form of stuck is occuring
         if ((self.stuck_straightMove_lvl>0) or (self.stuck_spotTurn_lvl>0)) or (abs(self.roll_lvl) == 3) or (abs(self.pitch_lvl)==3):
             self.pub_error_lv1_stk.publish(True)
         else:
             self.pub_error_lv1_stk.publish(False)
-
-
 
 
     def error_lv_report(self):
@@ -335,7 +272,6 @@ class robotMonitor():
             self.As_lat_past.pop(0)
             self.As_lon_past.pop(0)
 
-
     def haversine(self,lat1, lon1, lat2, lon2):
         # # # Calculates the distance in meters between two lat/lon pairs
         # Inputs: lat1 - current latitude; lon1 - current longitude; lat2 - previous latitude; lon2 - previous longitude 
@@ -351,21 +287,6 @@ class robotMonitor():
         c = 2*asin(sqrt(a))
 
         return R * c
-
-
-    def mileage_callback(self,mileage):
-        # # # Mileage callback function.
-
-        self.As_mileage_temp = mileage.data
-        if self.As_mileage_temp == 0: #when receive new task while robot operating
-            self.last_job_mileage = self.As_mileage_total_temp - self.As_mileage_total
-            if self.last_job_mileage != 0 :
-                with open(os.path.join(self.As_Mileage_path, self.As_Mileage_filename), 'a') as f: 
-                    self.newmileage=[str(self.today),': ',str(self.last_job_mileage),'\n']
-                    f.write("".join(self.newmileage))
-            self.As_mileage_total = self.As_mileage_total_temp
-        self.As_mileage_total_temp = self.As_mileage_temp + self.As_mileage_total #latest distance include current
-        # self.pub_total_mileage.publish(self.As_mileage_total_temp)
 
     def check_imu(self):
         # # # Checks IMU data to determine whether the robot is rolling, pitching, or turning in a yaw direction
@@ -492,42 +413,9 @@ class robotMonitor():
         # Remove the oldest value in the log
         if len(self.yaw_past)>5:
             self.yaw_past.pop(0)
-
-    # def writeToFile(self):
-    #     with open(os.path.join(self.As_Mileage_path, self.As_Mileage_filename)) as f:
-    #         lines = f.readlines()
-    #     lines[1] = str(self.As_mileage_temp)+'\n'
-    #     lines[4] = str(self.As_mileage_total_temp)+'\n'
-    #     lines[7] = str(self.As_mileage_total)+'\n'
-    #     with open(os.path.join(self.As_Mileage_path, self.As_Mileage_filenameTmp), 'w') as f2:
-    #         f2.writelines(lines) # write mileages to temporary file
-    #     copyfile(os.path.join(self.As_Mileage_path, self.As_Mileage_filenameTmp), os.path.join(self.As_Mileage_path, self.As_Mileage_filename)) # copy mileages from temporary file to permanent file
-    #     os.remove(os.path.join(self.As_Mileage_path, self.As_Mileage_filenameTmp)) # delete temporary file
-    
-    #def quaternion_to_euler_angle_vectorized2(self, w, x, y, z):
-    #    ysqr = y * y
-    #
-    #    t0 = +2.0 * (w * x + y * z)
-    #    t1 = +1.0 - 2.0 * (x * x + ysqr)
-    #    X = np.arctan2(t0, t1)
-    #
-    #    t2 = +2.0 * (w * y - z * x)
-    #    Y = np.arcsin(t2)
-    #
-    #    t3 = +2.0 * (w * z + x * y)
-    #    t4 = +1.0 - 2.0 * (ysqr + z * z)
-    #    Z = np.arctan2(t3, t4)
-    #    Z += 3.14159
-    #    if Z > 3.2:
-    #        Z -= 6.2832
-    #
-    #    return X, Y, Z
     
     def GPS_callback(self,gps_msg):
         # gps callback function, if gps status is 3 then it's in fix mode
-        # self.GPS_freq_cnt = self.GPS_freq_cnt + 1   # Frequency counting should be done in GPS script, not here
-        # utmx, utmy, utmzone = gc.LLtoUTM(self.As_lat, self.As_lon) #convert to UTM coordinates
-        # self.As_utm = [utmx, utmy, utmzone]
        
         self.As_lat = gps_msg.latitude
         self.As_lon = gps_msg.longitude
@@ -536,13 +424,11 @@ class robotMonitor():
             self.As_bGNSS = True
         else:
             self.As_bGNSS = False
-        # self.pub_GPS_status.publish(self.As_bGNSS)
 
     def imu_callback(self,data):
         # # # Callback function for IMU data after it is calibrated
         # Input: data <Imu.msg>
         
-        #angles = self.quaternion_to_euler_angle_vectorized2(data.orientation.x, data.orientation.y, data.orientation.z, data.orientation.w)
         roll, pitch, yaw = euler_from_quaternion([data.orientation.x, data.orientation.y, data.orientation.z, data.orientation.w]) # Use ROS built in for speed
 
         angles=[roll, pitch, yaw]
@@ -573,20 +459,7 @@ class robotMonitor():
             self.cmdVel_linear_buffer.append(self.cmdVel_linear.x)
             self.cmdVel_angular_buffer.append(self.cmdVel_angular.z)
             self.cmdVel_time = time.time()
-            #print(self.cmdVel_angular_buffer)
-        
-
-    # def _serviceCallbackMoveMtrInfo(self, request):
-    #     # # # Service callback for moveMonitorInfo.srv
-    # 
-    #     self.writeToFile()
-    #     mmI_res = moveMonitorInfoResponse()
-    #     mmI_res.mileage = self.As_mileage_total_temp
-    #     mmI_res.responseString = "Success!"
-    # 
-    #     return mmI_res
-
-
+            
 
 def main():
     rospy.init_node ('moveMonitor') 
