@@ -32,7 +32,7 @@ from std_msgs.msg import Float32, Bool, UInt8
 from sensor_msgs.msg import NavSatFix, Imu
 from geometry_msgs.msg import Twist
 
-from antobot_platform_msgs.srv import moveMonitorInfo, moveMonitorInfoResponse
+# from antobot_platform_msgs.srv import moveMonitorInfo, moveMonitorInfoResponse
 
 
 class moveManager():
@@ -138,8 +138,7 @@ class moveManager():
         # Publish safety critical data
         self.pub_error_lv1_stk = rospy.Publisher("/as/error_lv1_stk",Bool,queue_size =1)
 
-
-        self.srvNetMtr = rospy.Service("/antobot/manager/moveMonitorInfo", moveMonitorInfo, self._serviceCallbackMoveMtrInfo)
+        # self.srvNetMtr = rospy.Service("/antobot/manager/moveMonitorInfo", moveMonitorInfo, self._serviceCallbackMoveMtrInfo)
 
         self.pub_robot_stuck = rospy.Publisher("/as/robot_stuck", UInt8, queue_size = 1)
 
@@ -337,8 +336,6 @@ class moveManager():
             self.As_lon_past.pop(0)
 
 
-
-
     def haversine(self,lat1, lon1, lat2, lon2):
         # # # Calculates the distance in meters between two lat/lon pairs
         # Inputs: lat1 - current latitude; lon1 - current longitude; lat2 - previous latitude; lon2 - previous longitude 
@@ -496,30 +493,6 @@ class moveManager():
         if len(self.yaw_past)>5:
             self.yaw_past.pop(0)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     def writeToFile(self):
         with open(os.path.join(self.As_Mileage_path, self.As_Mileage_filename)) as f:
             lines = f.readlines()
@@ -603,26 +576,15 @@ class moveManager():
             #print(self.cmdVel_angular_buffer)
         
 
-
-
-
-        
-        
-
-        
-
-
-
-
-    def _serviceCallbackMoveMtrInfo(self, request):
-        # # # Service callback for moveMonitorInfo.srv
-
-        self.writeToFile()
-        mmI_res = moveMonitorInfoResponse()
-        mmI_res.mileage = self.As_mileage_total_temp
-        mmI_res.responseString = "Success!"
-
-        return mmI_res
+    # def _serviceCallbackMoveMtrInfo(self, request):
+    #     # # # Service callback for moveMonitorInfo.srv
+    # 
+    #     self.writeToFile()
+    #     mmI_res = moveMonitorInfoResponse()
+    #     mmI_res.mileage = self.As_mileage_total_temp
+    #     mmI_res.responseString = "Success!"
+    # 
+    #     return mmI_res
 
 
 
