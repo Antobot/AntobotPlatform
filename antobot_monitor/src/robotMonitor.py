@@ -54,7 +54,11 @@ class robotMonitor():
         self.cmdVel_angular_buffer = []
         self.cmdVel_spotTurn_consistency = False
         self.cmdVel_straight_consistency = False
-
+        
+        self.As_lat_past = []
+        self.As_lon_past = []
+        self.As_lat = None
+        self.As_lon = None
         
         self.stuck_spotTurn = False
         self.stuck_spotTurn_t = time.time()
