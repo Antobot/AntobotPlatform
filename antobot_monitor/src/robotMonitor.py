@@ -35,53 +35,53 @@ from geometry_msgs.msg import Twist
 # from antobot_platform_msgs.srv import moveMonitorInfo, moveMonitorInfoResponse
 
 
-class moveManager():
+class robotMonitor():
 
     def __init__(self):
 
         # # # Mileage folder/file
-        rospack = rospkg.RosPack()
-        packagePath=rospack.get_path('antobot_platform_robot')
-        path=packagePath+'/config/robot_config.yaml'
-        with open(path, 'r') as yamlfile:
-            data = yaml.safe_load(yamlfile)
-            self.As_Mileage_path = data['mileage_path']
-        self.As_Mileage_filename = 'mileage.txt'
-        self.As_Mileage_filenameTmp = 'mileageTmp.txt'
-        self.last_job_mileage = 0
-        self.As_lat_past = []
-        self.As_lon_past = []
-        self.As_lat = None
-        self.As_lon = None
-        self.today = date.today()
+        # rospack = rospkg.RosPack()
+        # packagePath=rospack.get_path('antobot_platform_robot')
+        # path=packagePath+'/config/robot_config.yaml'
+        # with open(path, 'r') as yamlfile:
+        #     data = yaml.safe_load(yamlfile)
+        #     self.As_Mileage_path = data['mileage_path']
+        # self.As_Mileage_filename = 'mileage.txt'
+        # self.As_Mileage_filenameTmp = 'mileageTmp.txt'
+        # self.last_job_mileage = 0
+        # self.As_lat_past = []
+        # self.As_lon_past = []
+        # self.As_lat = None
+        # self.As_lon = None
+        # self.today = date.today()
 
-        if os.path.exists(os.path.join(self.As_Mileage_path, self.As_Mileage_filename)):
-            with open(os.path.join(self.As_Mileage_path, self.As_Mileage_filename)) as f:
-                lines = f.readlines()
-                self.As_mileage_temp = float(lines[1]) #mileage from last job
-                self.As_mileage_total_temp = float(lines[4])
-                self.As_mileage_total = float(lines[7])
-            if self.As_mileage_total_temp > self.As_mileage_total: #the running of the antosupervisor must be earlier then antocartogrpher,so this number will be from last job
-                self.last_job_mileage = self.As_mileage_temp
-                self.As_mileage_temp = 0
-                self.As_mileage_total = self.As_mileage_total_temp
-                with open(os.path.join(self.As_Mileage_path, self.As_Mileage_filename), 'w') as f: #if the mileage havn't been update from last job
-                    lines[1] = str(0) + '\n'
-                    lines[4] = str(self.As_mileage_total) + '\n'
-                    lines[7] = str(self.As_mileage_total) + '\n'
-                    f.writelines(lines) 
-                    self.newmileage=[str(self.today),': ', str(self.last_job_mileage),'\n']
-                    f.write("".join(self.newmileage))
-        else:
-            os.mkdir(self.As_Mileage_path)
-            self.As_mileage_temp = 0
-            self.As_mileage_total = 0
-            self.As_mileage_total_temp = 0
-            with open(os.path.join(self.As_Mileage_path, self.As_Mileage_filename), 'w') as f2:
-                line = ['mileage for current job(m):\n',str(self.As_mileage_temp)+'\n\n','Total autonomous mileage include current job(m):\n',str(self.As_mileage_total_temp)+'\n\n','Total autonomous mileage history(m):\n',str(self.As_mileage_total)+'\n\n']
-                f2.writelines(line)
+        # if os.path.exists(os.path.join(self.As_Mileage_path, self.As_Mileage_filename)):
+        #     with open(os.path.join(self.As_Mileage_path, self.As_Mileage_filename)) as f:
+        #         lines = f.readlines()
+        #         self.As_mileage_temp = float(lines[1]) #mileage from last job
+        #         self.As_mileage_total_temp = float(lines[4])
+        #         self.As_mileage_total = float(lines[7])
+        #     if self.As_mileage_total_temp > self.As_mileage_total: #the running of the antosupervisor must be earlier then antocartogrpher,so this number will be from last job
+        #         self.last_job_mileage = self.As_mileage_temp
+        #         self.As_mileage_temp = 0
+        #         self.As_mileage_total = self.As_mileage_total_temp
+        #         with open(os.path.join(self.As_Mileage_path, self.As_Mileage_filename), 'w') as f: #if the mileage havn't been update from last job
+        #             lines[1] = str(0) + '\n'
+        #             lines[4] = str(self.As_mileage_total) + '\n'
+        #             lines[7] = str(self.As_mileage_total) + '\n'
+        #             f.writelines(lines) 
+        #             self.newmileage=[str(self.today),': ', str(self.last_job_mileage),'\n']
+        #             f.write("".join(self.newmileage))
+        # else:
+        #     os.mkdir(self.As_Mileage_path)
+        #     self.As_mileage_temp = 0
+        #     self.As_mileage_total = 0
+        #     self.As_mileage_total_temp = 0
+        #     with open(os.path.join(self.As_Mileage_path, self.As_Mileage_filename), 'w') as f2:
+        #         line = ['mileage for current job(m):\n',str(self.As_mileage_temp)+'\n\n','Total autonomous mileage include current job(m):\n',str(self.As_mileage_total_temp)+'\n\n','Total autonomous mileage history(m):\n',str(self.As_mileage_total)+'\n\n']
+        #         f2.writelines(line)
 
-        self.mileage_past = 0
+        # self.mileage_past = 0
         self.b_robot_movement = False # default robot is not move
         self.u_robot_movement_cnt = 0
 
@@ -133,7 +133,7 @@ class moveManager():
         self.sub_GPS_data = rospy.Subscriber("/antobot_gps",NavSatFix,self.GPS_callback)        # Should raw GPS data be used? What if it stops coming?
         self.sub_IMU = rospy.Subscriber('/imu/data_corrected', Imu, self.imu_callback)          # Subscriber for imu data corrected
         self.sub_cmdVel = rospy.Subscriber('/antobot_robot/cmd_vel', Twist, self.cmdVel_callback)    # Subscriber for cmd velocity
-        self.sub_mileage_tracker = rospy.Subscriber('/antobot/navigator/distanceTravelled',Float32, self.mileage_callback)     # Subscriber for mileage
+        # self.sub_mileage_tracker = rospy.Subscriber('/antobot/navigator/distanceTravelled',Float32, self.mileage_callback)     # Subscriber for mileage
 
         # Publish safety critical data
         self.pub_error_lv1_stk = rospy.Publisher("/as/error_lv1_stk",Bool,queue_size =1)
@@ -493,16 +493,16 @@ class moveManager():
         if len(self.yaw_past)>5:
             self.yaw_past.pop(0)
 
-    def writeToFile(self):
-        with open(os.path.join(self.As_Mileage_path, self.As_Mileage_filename)) as f:
-            lines = f.readlines()
-        lines[1] = str(self.As_mileage_temp)+'\n'
-        lines[4] = str(self.As_mileage_total_temp)+'\n'
-        lines[7] = str(self.As_mileage_total)+'\n'
-        with open(os.path.join(self.As_Mileage_path, self.As_Mileage_filenameTmp), 'w') as f2:
-            f2.writelines(lines) # write mileages to temporary file
-        copyfile(os.path.join(self.As_Mileage_path, self.As_Mileage_filenameTmp), os.path.join(self.As_Mileage_path, self.As_Mileage_filename)) # copy mileages from temporary file to permanent file
-        os.remove(os.path.join(self.As_Mileage_path, self.As_Mileage_filenameTmp)) # delete temporary file
+    # def writeToFile(self):
+    #     with open(os.path.join(self.As_Mileage_path, self.As_Mileage_filename)) as f:
+    #         lines = f.readlines()
+    #     lines[1] = str(self.As_mileage_temp)+'\n'
+    #     lines[4] = str(self.As_mileage_total_temp)+'\n'
+    #     lines[7] = str(self.As_mileage_total)+'\n'
+    #     with open(os.path.join(self.As_Mileage_path, self.As_Mileage_filenameTmp), 'w') as f2:
+    #         f2.writelines(lines) # write mileages to temporary file
+    #     copyfile(os.path.join(self.As_Mileage_path, self.As_Mileage_filenameTmp), os.path.join(self.As_Mileage_path, self.As_Mileage_filename)) # copy mileages from temporary file to permanent file
+    #     os.remove(os.path.join(self.As_Mileage_path, self.As_Mileage_filenameTmp)) # delete temporary file
     
     #def quaternion_to_euler_angle_vectorized2(self, w, x, y, z):
     #    ysqr = y * y
@@ -591,7 +591,7 @@ class moveManager():
 def main():
     rospy.init_node ('moveMonitor') 
     rate = rospy.Rate(1)
-    moveMgr = moveManager()
+    moveMgr = robotMonitor()
     while not rospy.is_shutdown():
         # moveMgr.writeToFile()
         moveMgr.robot_stuck()

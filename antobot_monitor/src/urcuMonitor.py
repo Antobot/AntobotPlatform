@@ -27,7 +27,7 @@ disk="./"
 min_gb=2
 min_percent=10
 
-class sysManager():
+class urcuMonitor():
 
     def __init__(self):
 
@@ -228,9 +228,9 @@ class sysManager():
                 print("service call failed: %s" % e)
 
 def main():
-    rospy.init_node ('sysMonitor') 
+    rospy.init_node ('urcuMonitor') 
     rate = rospy.Rate(1)
-    sysMonitor= sysManager()
+    sysMonitor= urcuMonitor()
     try:
         while not rospy.is_shutdown():
             sysMonitor.storage_management()
