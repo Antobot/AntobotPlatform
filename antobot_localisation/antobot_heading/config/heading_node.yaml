@@ -1,4 +1,0 @@
-/heading_node/gps_topic: /antobot_gps
-/heading_node/imu_topic: /imu/data
-/heading_node/odometry_topic: /odometry/filtered
-/heading_node/wheel_odometry_topic: /antobot_robot/odom
