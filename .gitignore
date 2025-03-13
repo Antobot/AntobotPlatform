@@ -1,2 +1,3 @@
 *.crt
 *.pem
+*__pycache__*
