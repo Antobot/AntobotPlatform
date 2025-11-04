@@ -1,6 +1,6 @@
-[submodule "AntobotURCU"]
-	path = AntobotURCU
-	url = https://github.com/Antobot/AntobotURCU.git
-[submodule "AntobotRobot"]
-	path = AntobotRobot
-	url = https://github.com/Antobot/AntobotRobot.git
+[submodule "acRobot"]
+	path = acRobot
+	url = https://git.nicecart.ai/AntoCART/acRobot.git
+[submodule "acURCU"]
+	path = acURCU
+	url = https://git.nicecart.ai/AntoCART/acURCU.git
